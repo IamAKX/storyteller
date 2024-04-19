@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "184559588075",
+    "project_id": "storytelleradmin",
+    "storage_bucket": "storytelleradmin.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:184559588075:android:5d181a056d0fd91e9de4ae",
+        "android_client_info": {
+          "package_name": "com.storyteller.story_teller"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBGFWaSwH7CpZZGWg24LWFCtfnjpKtmREM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:184559588075:android:656165381e67ec1b9de4ae",
+        "android_client_info": {
+          "package_name": "com.storyteller.story_teller_admin"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBGFWaSwH7CpZZGWg24LWFCtfnjpKtmREM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
