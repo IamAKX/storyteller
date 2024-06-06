@@ -1,9 +1,11 @@
 import 'dart:async';
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_bubble/chat_bubble.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:story_teller/enums/chat_sender.dart';
 import 'package:story_teller/enums/message_type.dart';
@@ -12,6 +14,7 @@ import 'package:story_teller/model/story_chat_model.dart';
 import 'package:story_teller/model/story_chat_model_list.dart';
 import 'package:story_teller/model/story_model.dart';
 import 'package:story_teller/util/color.dart';
+import 'package:story_teller/util/prefs_key.dart';
 import 'package:story_teller/util/theme.dart';
 
 import '../../service/api_provider.dart';
@@ -49,9 +52,25 @@ class _ChatScreenState extends State<ChatScreen> {
   void initState() {
     super.initState();
     // _startTimer();
+    if (prefs.containsKey(PrefsKey.bgImage)) {
+      _image = File(prefs.getString(PrefsKey.bgImage) ?? '');
+    }
     WidgetsBinding.instance.addPostFrameCallback(
       (_) => reloadScreen(),
     );
+  }
+
+  File? _image;
+
+  Future<void> _pickImage() async {
+    final pickedFile =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      setState(() {
+        _image = File(pickedFile.path);
+        prefs.setString(PrefsKey.bgImage, pickedFile.path);
+      });
+    }
   }
 
   reloadScreen() async {
@@ -187,10 +206,35 @@ class _ChatScreenState extends State<ChatScreen> {
             icon: Icon(prefs.containsKey('story_${widget.story.id}')
                 ? Icons.bookmark
                 : Icons.bookmark_outline),
+          ),
+          IconButton(
+              onPressed: () {
+                setState(() {
+                  _pickImage();
+                });
+              },
+              icon: const Icon(Icons.image))
+        ],
+      ),
+      body: Stack(
+        fit: StackFit.expand,
+        children: [
+          _image != null
+              ? Image.file(_image!, fit: BoxFit.cover)
+              : Container(color: background), // Placeholder background
+          InkWell(
+            onTap: () {
+              _addMessage();
+              scrollController.animateTo(
+                scrollController.position.maxScrollExtent + 200,
+                duration: const Duration(milliseconds: 500),
+                curve: Curves.easeOut,
+              );
+            },
+            child: getBody(context),
           )
         ],
       ),
-      body: getBody(context),
     );
   }
 
@@ -214,25 +258,25 @@ class _ChatScreenState extends State<ChatScreen> {
             },
           ),
         ),
-        ElevatedButton(
-          onPressed: () async {
-            _addMessage();
-            scrollController.animateTo(
-              scrollController.position.maxScrollExtent + 200,
-              duration: const Duration(milliseconds: 500),
-              curve: Curves.easeOut,
-            );
-          },
-          style: ButtonStyle(
-              backgroundColor:
-                  MaterialStateProperty.all<Color>(inputFillColor)),
-          child: const SizedBox(
-            width: double.infinity,
-            child: Center(
-              child: Text('Next'),
-            ),
-          ),
-        )
+        // ElevatedButton(
+        //   onPressed: () async {
+        //     _addMessage();
+        //     scrollController.animateTo(
+        //       scrollController.position.maxScrollExtent + 200,
+        //       duration: const Duration(milliseconds: 500),
+        //       curve: Curves.easeOut,
+        //     );
+        //   },
+        //   style: ButtonStyle(
+        //       backgroundColor:
+        //           MaterialStateProperty.all<Color>(inputFillColor)),
+        //   child: const SizedBox(
+        //     width: double.infinity,
+        //     child: Center(
+        //       child: Text('Next'),
+        //     ),
+        //   ),
+        // )
       ],
     );
   }

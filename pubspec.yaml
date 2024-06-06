@@ -33,13 +33,14 @@ dependencies:
   string_validator: ^1.0.2
   timeago: ^3.6.1
   url_launcher: ^6.2.5
-  image_picker_web: ^3.1.1
+  # image_picker_web: ^3.1.1
   firebase_core: ^2.27.0
   flutter_chat_bubble: ^2.0.2
   carousel_slider: ^4.2.1
   firebase_auth: ^4.17.8
   firebase_storage: ^11.6.9
   shared_preferences_riverpod: ^0.3.0
+  image_picker: ^1.1.2
 
 dev_dependencies:
   flutter_test:
