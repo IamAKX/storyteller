@@ -1,5 +1,6 @@
 class Api {
-  static const String baseUrl = 'https://3.109.185.125:8081';
+  // static const String baseUrl = 'https://3.109.185.125:8081';
+  static const String baseUrl = 'https://103.193.74.150:8081';
 
   // User
   static const String getAllUser = '$baseUrl/user';

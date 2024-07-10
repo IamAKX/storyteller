@@ -87,6 +87,9 @@ class _ChatScreenState extends State<ChatScreen> {
           log('loop bookmarked index : $bookmarkedIndex');
           log('loop current index : $index');
         }
+        if (messages.isEmpty) {
+          _addMessage();
+        }
       });
     });
   }
@@ -101,6 +104,7 @@ class _ChatScreenState extends State<ChatScreen> {
     if (index < (chatList?.data?.length ?? 0)) {
       setState(() {
         StoryChatModel chatModel = chatList!.data!.elementAt(index);
+        log(chatModel.toJson());
         messages.add(
           ChatBubble(
             elevation: 5,
